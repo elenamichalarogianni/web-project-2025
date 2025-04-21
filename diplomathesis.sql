@@ -26,7 +26,8 @@ CREATE TABLE Theses (
     Title VARCHAR(255),
     Description TEXT,
     Link VARCHAR(255),
-    STATUS ENUM('Under Assignment', 'Under Review', 'Completed'),
+    STATUS ENUM('Under Assignment','Under Review', 'Completed'),
+    ACTSTATUS ENUM('Active','Inactive') default 'Inactive',
     AssignmentDate DATETIME DEFAULT current_timestamp(),
     StudentAM INT,
     SupervisorID INT,
@@ -69,7 +70,7 @@ CREATE TABLE Examination (
     ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
-Insert into Profess
+
 
 DELIMITER $$
 
@@ -95,6 +96,34 @@ END$$
 
 DELIMITER ;
 
+DELIMITER $$
+
+CREATE PROCEDURE ActivateThesis(
+     IN inThesisID INT
+)
+BEGIN
+    DECLARE acceptedCount INT;
+
+    SELECT COUNT(*) INTO acceptedCount
+    FROM ThesisCommittee
+    WHERE ThesisID = inThesisID AND Status = 'Accepted';
+
+    IF acceptedCount >= 2 THEN
+        UPDATE Theses
+        SET ACTSTATUS = 'Active'
+        WHERE ThesisID = inThesisID;
+
+
+        UPDATE ThesisCommittee
+        SET Status = 'Rejected'
+        WHERE ThesisID = inThesisID AND Status = 'Invited';
+    END IF;
+END $$
+
+DELIMITER ;
+
+#TESTING
+
 INSERT INTO Student (StudentAM, FullName, Username, Email, MobilePhone, Phone, Address, YearOfEntry, Password)
 VALUES (2023001, 'Μαρία Παπαδοπούλου', 'maria_pap', 'maria@example.com', '6912345678', '2101234567', 'Αθήνα 1', '2023-10-01', 'pass123');
 
@@ -108,3 +137,14 @@ VALUES ('Ανάπτυξη Web Εφαρμογής', 'Περιγραφή διπλ�
 
 CALL SendInvitation(1, 1, 'Member');
 CALL SendInvitation(1, 2, 'Supervisor');
+
+UPDATE ThesisCommittee SET Status = 'Accepted' WHERE ThesisID = 1 AND ProfessorID = 1;
+UPDATE ThesisCommittee SET Status = 'Accepted' WHERE ThesisID = 1 AND ProfessorID = 2;
+
+SELECT * FROM ThesisCommittee;
+SELECT * FROM THESES;
+CALL ActivateThesis(1);
+
+SELECT Status FROM Theses WHERE ThesisID = 1;
+SELECT * FROM THESES;
+SELECT * FROM ThesisCommittee WHERE ThesisID = 1;
