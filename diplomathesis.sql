@@ -150,4 +150,4 @@ SELECT actStatus FROM Theses WHERE ThesisID = 1;
 SELECT * FROM THESES;
 SELECT * FROM ThesisCommittee WHERE ThesisID = 1;
 
-
+hello
