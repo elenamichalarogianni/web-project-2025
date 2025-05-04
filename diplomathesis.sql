@@ -2,16 +2,24 @@ DROP DATABASE IF EXISTS diplomathesis;
 CREATE DATABASE diplomathesis;
 USE diplomathesis;
 
+
+CREATE TABLE Users(
+    UserID INT PRIMARY KEY AUTO_INCREMENT,
+    Username VARCHAR(50) UNIQUE NOT NULL,
+    Password_hash VARCHAR(25) NOT NULL,
+    UserType ENUM ('Student', 'Professor', 'Secretary') NOT NULL
+);
+
 CREATE TABLE Student (
     StudentAM INT PRIMARY KEY,
     FullName VARCHAR (100),
-    Username VARCHAR(50),
     Email VARCHAR(100),
     MobilePhone VARCHAR(20),
     Phone VARCHAR(20),
     Address VARCHAR(50),
     YearOfEntry DATE,
-    SPassword VARCHAR(25)
+     FOREIGN KEY (StudentAM) REFERENCES Users(UserID)
+	ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Secretary  (
@@ -22,18 +30,36 @@ CREATE TABLE Secretary  (
     MobilePhone VARCHAR(20),
     Phone VARCHAR(20),
     Address VARCHAR(50),
-    SecPassword VARCHAR(25)
+    SecPassword VARCHAR(25),
+     FOREIGN KEY (SecretaryAM) REFERENCES Users(UserID)
+     ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Professor (
-    ProfessorID INT PRIMARY KEY AUTO_INCREMENT,
-    FullName VARCHAR(100),
-    Email VARCHAR(100)
+CREATE TABLE Professors (
+    ProfessorID INT PRIMARY KEY,
+    FullName VARCHAR(100) DEFAULT 'unknown' NOT NULL,
+    Email VARCHAR(100),
+    Department ENUM('Mechanical Engineering and Aeronautics', 'Electrical and Computer Engineering', 'Civil Engineering', 'Computer Engineering and Informatics', 'Chemical Engineering', 'Biology', 'Mathematics', 'Geology', 'Physics', 'Materials Science', 'Chemistry') not null,
+    Specialty VARCHAR(100),
+    RegistrationDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ProfessorID) REFERENCES Users(UserID)
+	ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE ThesisTopics(
+    TopicID INT PRIMARY KEY AUTO_INCREMENT,
+    Title VARCHAR(255) NOT NULL,
+    Summary TEXT,
+    PDFpath VARCHAR(255),
+    ProfessorID INT NOT NULL,
+    FOREIGN KEY (ProfessorID) REFERENCES Professors(ProfessorID)
+     ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
 CREATE TABLE Theses (
     ThesisID INT PRIMARY KEY AUTO_INCREMENT,
+    TopicID INT,
     Title VARCHAR(255),
     Descr TEXT,
     Link VARCHAR(255),
@@ -45,7 +71,7 @@ CREATE TABLE Theses (
     SupervisorID INT,
     FOREIGN KEY (StudentAM) REFERENCES Student(StudentAM)
     ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (SupervisorID) REFERENCES Professor(ProfessorID)
+    FOREIGN KEY (SupervisorID) REFERENCES Professors(ProfessorID)
      ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
@@ -57,7 +83,7 @@ CREATE TABLE ThesisCommittee (
     PRIMARY KEY (ThesisID, ProfessorID),
     FOREIGN KEY (ThesisID) REFERENCES Theses(ThesisID)
     ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (ProfessorID) REFERENCES Professor(ProfessorID)
+    FOREIGN KEY (ProfessorID) REFERENCES Professors(ProfessorID)
     ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -80,6 +106,55 @@ CREATE TABLE Presentation (
     FOREIGN KEY (ThesisID) REFERENCES Theses(ThesisID)
     ON DELETE CASCADE ON UPDATE CASCADE 
 );
+
+CREATE TABLE ThesisGrades(
+    ThesisID INT,
+    ProfessorID INT,
+    Grade DECIMAL(4,2),
+    Criteria TEXT,
+    PRIMARY KEY (ThesisID, ProfessorID),
+    FOREIGN KEY (ThesisID) REFERENCES Theses(ThesisID)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (ProfessorID) REFERENCES Professors(ProfessorID)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE ThesisNotes(
+    NoteID INT PRIMARY KEY AUTO_INCREMENT,
+    ThesisID INT,
+    ProfessorID INT,
+    NoteText VARCHAR(300),
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ThesisID) REFERENCES Theses(ThesisID)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (ProfessorID) REFERENCES Professors(ProfessorID)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE ExaminationRecords (
+    ThesisID INT PRIMARY KEY,
+    HTMLcontent TEXT,
+    FOREIGN KEY (ThesisID) REFERENCES Theses(ThesisID)
+);
+
+CREATE TABLE CouncilRecords (
+    ThesisID INT PRIMARY KEY,
+    RecordNumber INT,
+    RecordYear INT,
+    CancellationReason TEXT,
+    CancelledBy ENUM('Student', 'Supervisor', 'Admin'),
+    FOREIGN KEY (ThesisID) REFERENCES Theses(ThesisID)
+);
+
+CREATE TABLE PublicAnnouncements (
+    AnnouncementID INT PRIMARY KEY AUTO_INCREMENT,
+    ThesisID INT,
+    PresentationDate DATE,
+    AnnouncementFormat ENUM('XML', 'JSON'),
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ThesisID) REFERENCES Theses(ThesisID)
+);
+
 
 DELIMITER $$
 
@@ -183,13 +258,22 @@ DELIMITER ;
 
 #TESTING
 
-INSERT INTO Student (StudentAM, FullName, Username, Email, MobilePhone, Phone, Address, YearOfEntry, SPassword)
-VALUES (2023001, 'Φρώσω Παπαδοπούλου', 'froso_pap', 'frosopap@example.com', '6912345678', '2101234567', 'Αθήνα 1', '2023-10-01', 'pass123');
+INSERT INTO Users (UserID, Username, Password_hash, UserType)
+VALUES (2023001, 'froso_pap', 'lol', 'Student');
+
+INSERT INTO Users (UserID, Username, Password_hash, UserType)
+VALUES (1, 'gnik', 'lol', 'Professor');
+
+INSERT INTO Users (UserID, Username, Password_hash, UserType)
+VALUES (2, 'epan', 'lol', 'Professor');
+
+INSERT INTO Student (StudentAM, FullName, Email, MobilePhone, Phone, Address, YearOfEntry)
+VALUES (2023001, 'Φρώσω Παπαδοπούλου', 'frosopap@example.com', '6912345678', '2101234567', 'Αθήνα 1', '2023-10-01');
 
 
-INSERT INTO Professor (FullName, Email) VALUES
-('Δρ. Γεώργιος Νικολάου', 'gnik@example.com'),
-('Δρ. Ελένη Παναγιώτου', 'epan@example.com');
+INSERT INTO Professors (ProfessorID, Fullname, Email, Department, Specialty, RegistrationDate) VALUES
+(1, 'Δρ. Γεώργιος Νικολάου', 'gnik@example.com', 'Biology', 'lol', '2023-10-01'),
+(2, 'Δρ. Ελένη Παναγιώτου', 'epan@example.com', 'Mathematics', 'lmao', '2023-10-01');
 
 INSERT INTO Theses (Title, Descr, Link, thesisStatus, StudentAM)
 VALUES ('Ανάπτυξη Web Εφαρμογής', 'Περιγραφή διπλωματικής', 'link.pdf', 'Under Review',2023001);
