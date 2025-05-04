@@ -24,11 +24,12 @@ CREATE TABLE Professor (
 CREATE TABLE Theses (
     ThesisID INT PRIMARY KEY AUTO_INCREMENT,
     Title VARCHAR(255),
-    Description TEXT,
+    Descr TEXT,
     Link VARCHAR(255),
-    STATUS ENUM('Under Assignment','Under Review', 'Completed'),
-    ACTSTATUS ENUM('Active','Inactive') default 'Inactive',
+    thesisstatus ENUM('Under Assignment','Under Review', 'Completed'),
+    actstatus ENUM('Active','Inactive') default 'Inactive',
     AssignmentDate DATETIME DEFAULT current_timestamp(),
+    InsertGrade ENUM('Yes','No') DEFAULT 'No',
     StudentAM INT,
     SupervisorID INT,
     FOREIGN KEY (StudentAM) REFERENCES Student(StudentAM)
@@ -40,8 +41,8 @@ CREATE TABLE Theses (
 CREATE TABLE ThesisCommittee (
     ThesisID INT,
     ProfessorID INT,
-    Role ENUM('Supervisor','Member'),
-    Status ENUM('Invited','Accepted','Rejected') DEFAULT 'Invited',
+    MemberType ENUM('Supervisor','Member'),
+    MemberStatus ENUM('Invited','Accepted','Rejected') DEFAULT 'Invited',
     PRIMARY KEY (ThesisID, ProfessorID),
     FOREIGN KEY (ThesisID) REFERENCES Theses(ThesisID)
     ON DELETE CASCADE ON UPDATE CASCADE,
@@ -53,8 +54,7 @@ CREATE TABLE ThesisFiles (
 	FileID INT PRIMARY KEY auto_increment,
     ThesisID INT,
     FileType ENUM('Draft', 'Link', 'Other'),
-    FilePath varchar(255),
-    Description TEXT,
+    FilePath TEXT,
     FOREIGN KEY (ThesisID) REFERENCES Theses(ThesisID)
     ON DELETE CASCADE ON UPDATE CASCADE 
 );
@@ -70,8 +70,6 @@ CREATE TABLE Examination (
     ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
-
-
 DELIMITER $$
 
 CREATE PROCEDURE SendInvitation(
@@ -86,7 +84,7 @@ BEGIN
         WHERE ThesisID = inthesisID AND ProfessorID = inprofessorID
     ) THEN
     
-        INSERT INTO ThesisCommittee (ThesisID, ProfessorID, Role, Status)
+        INSERT INTO ThesisCommittee (ThesisID, ProfessorID, membertype, memberStatus)
         VALUES (inthesisID, inprofessorID, inrole, 'Invited');
     ELSE
         SIGNAL SQLSTATE '45000'
@@ -106,7 +104,7 @@ BEGIN
 
     SELECT COUNT(*) INTO acceptedCount
     FROM ThesisCommittee
-    WHERE ThesisID = inThesisID AND Status = 'Accepted';
+    WHERE ThesisID = inThesisID AND memberStatus = 'Accepted';
 
     IF acceptedCount >= 2 THEN
         UPDATE Theses
@@ -115,8 +113,11 @@ BEGIN
 
 
         UPDATE ThesisCommittee
-        SET Status = 'Rejected'
-        WHERE ThesisID = inThesisID AND Status = 'Invited';
+        SET memberStatus = 'Rejected'
+        WHERE ThesisID = inThesisID AND memberStatus = 'Invited';
+        
+        DELETE FROM ThesisCommittee
+        WHERE ThesisID = inThesisID AND memberStatus = 'Rejected';
     END IF;
 END $$
 
@@ -125,26 +126,28 @@ DELIMITER ;
 #TESTING
 
 INSERT INTO Student (StudentAM, FullName, Username, Email, MobilePhone, Phone, Address, YearOfEntry, Password)
-VALUES (2023001, 'Μαρία Παπαδοπούλου', 'maria_pap', 'maria@example.com', '6912345678', '2101234567', 'Αθήνα 1', '2023-10-01', 'pass123');
+VALUES (2023001, 'Φρώσω Παπαδοπούλου', 'froso_pap', 'frosopap@example.com', '6912345678', '2101234567', 'Αθήνα 1', '2023-10-01', 'pass123');
 
 
 INSERT INTO Professor (FullName, Email) VALUES
 ('Δρ. Γεώργιος Νικολάου', 'gnik@example.com'),
 ('Δρ. Ελένη Παναγιώτου', 'epan@example.com');
 
-INSERT INTO Theses (Title, Description, Link, Status, StudentAM)
-VALUES ('Ανάπτυξη Web Εφαρμογής', 'Περιγραφή διπλωματικής', 'link.pdf', 'Under Review', 2023001);
+INSERT INTO Theses (Title, Descr, Link, thesisStatus, StudentAM)
+VALUES ('Ανάπτυξη Web Εφαρμογής', 'Περιγραφή διπλωματικής', 'link.pdf', 'Under Review',2023001);
 
 CALL SendInvitation(1, 1, 'Member');
 CALL SendInvitation(1, 2, 'Supervisor');
 
-UPDATE ThesisCommittee SET Status = 'Accepted' WHERE ThesisID = 1 AND ProfessorID = 1;
-UPDATE ThesisCommittee SET Status = 'Accepted' WHERE ThesisID = 1 AND ProfessorID = 2;
+UPDATE ThesisCommittee SET memberStatus = 'Accepted' WHERE ThesisID = 1 AND ProfessorID = 1;
+UPDATE ThesisCommittee SET memberStatus = 'Accepted' WHERE ThesisID = 1 AND ProfessorID = 2;
 
 SELECT * FROM ThesisCommittee;
 SELECT * FROM THESES;
 CALL ActivateThesis(1);
 
-SELECT Status FROM Theses WHERE ThesisID = 1;
+SELECT actStatus FROM Theses WHERE ThesisID = 1;
 SELECT * FROM THESES;
 SELECT * FROM ThesisCommittee WHERE ThesisID = 1;
+
+
