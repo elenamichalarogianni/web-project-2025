@@ -292,11 +292,3 @@ SELECT actStatus FROM Theses WHERE ThesisID = 1;
 SELECT * FROM THESES;
 SELECT * FROM ThesisCommittee WHERE ThesisID = 1;
 
-INSERT INTO Theses (Title, Descr, thesisStatus, StudentAM)
-VALUES ('Test Thesis Online Missing Link', 'Dummy', 'Under Review', 2023001);
-
-INSERT INTO Presentation (ThesisID, ExamDate, ExamTime, ExamMode, Location, RepositoryLink)
-VALUES (2, '2025-06-01', '12:00:00', 'online', null, 'https://ceid');
-
-
-
