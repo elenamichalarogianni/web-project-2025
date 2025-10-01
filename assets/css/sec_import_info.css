@@ -1,0 +1,94 @@
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  width: clamp(420px, 58vw, 640px);     
+  height: clamp(420px, 48vw, 640px);    
+  margin: clamp(20px, 4vh, 32px) auto;      
+  padding: clamp(14px, 1.8vw, 22px);        
+  background: linear-gradient(135deg, #ffffff, #f9fbfc, #d0e6ef);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);  
+  box-sizing: border-box;
+  gap: 16px;
+}
+
+
+.card form { width: 100%; max-width: 520px; }
+
+.card h1 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #185A7B;
+  text-align: center;
+  margin: 0 0 18px;
+  border-bottom: 2px solid #d0e6ef;
+  padding-bottom: 10px;
+  letter-spacing: .5px;
+}
+
+.card label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.card input[type="url"] {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 2px solid rgba(196,218,227,0.5);
+  border-radius: 8px;
+  background-color: #f9fbfc;
+  box-sizing: border-box;
+}
+
+.card button {
+  align-self: center;
+  width: auto;                    
+  min-width: 120px;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: 2px solid rgba(196,218,227,0.5);
+  border-radius: 8px;
+  background-color: #c4e2f1;
+  color: #185A7B;
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+  margin-top: 10px;
+}
+
+.card button:hover {
+  background-color: #b9d8ea;
+  color: #0f3c53;
+  border-color: #185A7B;
+}
+
+.card .hint {
+  color: #607d8b;
+  font-size: .9rem;
+}
+
+
+.card .result {
+  margin-top: 16px;
+  white-space: pre-wrap;
+  background: #f5f7f9;
+  padding: 12px;
+  border-radius: 8px;
+  width: 100%;
+  max-height: 320px;             
+  overflow: auto;                 
+  box-sizing: border-box;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+
+@media (max-width: 700px) {
+  .card { width: min(94vw, 560px); padding: 14px; }
+  .card h1 { font-size: 22px; }
+  .card form { max-width: 100%; }
+  .card button { width: 100%; min-width: 0; }
+}

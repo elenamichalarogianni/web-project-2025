@@ -1,0 +1,105 @@
+
+.topics-list {
+  width: 90%;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #ffffff, #f9fbfc, #d0e6ef);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.topics-list > h2 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  color: #185A7B;
+  margin-top: 0;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #d0e6ef;
+  padding-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.topics-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.topics-list li {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(196, 218, 227, 0.5);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  color: #333;
+  font-size: 15px;
+}
+
+
+.topics-list .topic-title {
+  display: inline-block;
+  color: #185A7B;
+  font-weight: 600;
+  font-size: 18px;
+  text-decoration: none;
+  margin-bottom: 6px;
+}
+
+.topics-list .topic-title:hover {
+  text-decoration: underline;
+}
+
+
+.topics-list .topic-summary {
+  font-size: 15px;
+  line-height: 1.45;
+  margin: 6px 0 10px;
+}
+
+
+.topics-list .pdf-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  color: #185A7B;
+  background: linear-gradient(180deg, #ffffff, #f3f9fc);
+  border: 1px solid #185A7B;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: background 120ms ease, color 120ms ease,
+              box-shadow 120ms ease, transform 80ms ease;
+}
+
+.topics-list .pdf-link:hover {
+  background: #185A7B;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(24, 90, 123, 0.25);
+}
+
+.topics-list .pdf-link:active {
+  transform: translateY(1px);
+}
+
+
+/*
+.blue-bar-left { width: var(--sidebarW); }
+.blue-bar-top  { height: var(--topH); }
+body{
+  padding-left: var(--sidebarW);   
+  padding-top:  var(--topH);       
+}
+
+*/
+.blue-bar-left button{
+  width: calc(100% - 20px);
+  margin: 30px 10px 0;
+}

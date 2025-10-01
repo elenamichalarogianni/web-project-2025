@@ -1,0 +1,84 @@
+
+.prof-theses-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 65%;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #ffffff, #f9fbfc, #d0e6ef);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+.prof-theses-container h2 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #185A7B;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #d0e6ef;
+  padding-bottom: 10px;
+}
+.prof-theses-container ul { list-style: none; padding: 0; margin: 0; width: 100%; }
+.prof-theses-container li {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 18px 22px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  border: 1px solid rgba(196, 218, 227, 0.6);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.prof-theses-container li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+.prof-theses-container li a {
+  display: block;
+  color: #19648a;
+  text-decoration: none;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.prof-theses-container li a:hover { text-decoration: underline; }
+.prof-theses-container li .student { display: block; font-size: 16px; color: #185A7B; margin-bottom: 4px; }
+.prof-theses-container li .title { display: block; font-size: 15px; color: #333; margin-bottom: 6px; }
+.prof-theses-container li p { font-size: 14px; line-height: 1.5; color: #444; margin: 0 0 8px 0; }
+
+
+.prof-theses-container .view-btn,
+.prof-theses-container .cancel-btn {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 14px;
+  color: #185A7B;
+  border: 1px solid rgba(196, 218, 227, 0.8);
+  padding: 6px 10px;
+  border-radius: 4px;
+  background-color: #f9fbfc;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+  text-decoration: none;
+  box-sizing: border-box;
+  vertical-align: middle;
+  line-height: 1;
+  cursor: pointer;
+  font-family: inherit;
+}
+.prof-theses-container .cancel-btn { margin-left: 6px; }
+.prof-theses-container .view-btn:hover,
+.prof-theses-container .cancel-btn:hover {
+  background-color: #d0e6ef;
+  color: #ffffff;
+  border-color: #185A7B;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .prof-theses-container { width: 90%; padding: 20px; }
+  .prof-theses-container h2 { font-size: 22px; }
+  .prof-theses-container li { padding: 15px 18px; }
+}
