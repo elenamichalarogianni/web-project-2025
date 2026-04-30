@@ -16,3 +16,6 @@ A full-stack web application developed as a university team project. This projec
 
 ## Installation
 Run using XAMPP server, VS Code, and by setting up the database!
+
+## Screenshots
+![alt text](images/image-1.png)
