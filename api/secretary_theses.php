@@ -1,7 +1,7 @@
 <?php
 
 header('Content-Type: application/json; charset=utf-8');
-require_once __DIR__ . '/../db_connect.php';
+require_once __DIR__ . '/../app/config/db_connect.php';
 
 if (!isset($_COOKIE['email']) || (($_COOKIE['role'] ?? '') !== 'Secretary')) {
   http_response_code(401);
@@ -19,3 +19,4 @@ $res = $conn->query($sql);
 $rows = $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
 
 echo json_encode(['ok'=>true,'items'=>$rows], JSON_UNESCAPED_UNICODE);
+

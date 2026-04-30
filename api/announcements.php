@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../db_connect.php';
+require_once __DIR__ . '/../app/config/db_connect.php';
 
 function bad($m,$c=400){ http_response_code($c);
   header('Content-Type: application/json; charset=utf-8');
@@ -71,3 +71,4 @@ if($fmt==='xml'){
   header('Content-Type: application/json; charset=utf-8');
   echo json_encode($payload, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
 }
+

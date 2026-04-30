@@ -1,7 +1,7 @@
 <?php
 
 header('Content-Type: application/json; charset=utf-8');
-require_once __DIR__ . '/../db_connect.php';
+require_once __DIR__ . '/../app/config/db_connect.php';
 
 if (!isset($_COOKIE['email']) || (($_COOKIE['role'] ?? '') !== 'Secretary')) {
   http_response_code(401);
@@ -56,3 +56,4 @@ $t->execute();
 $t->close();
 
 echo json_encode(['ok'=>true]);
+

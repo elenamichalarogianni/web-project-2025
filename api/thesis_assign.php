@@ -1,7 +1,7 @@
 <?php
 
 header('Content-Type: application/json; charset=utf-8');
-require_once __DIR__ . '/../db_connect.php';
+require_once __DIR__ . '/../app/config/db_connect.php';
 
 if (!isset($_COOKIE['userid']) || (($_COOKIE['role'] ?? '') !== 'Professor')) {
   http_response_code(401); echo json_encode(['ok'=>false,'error'=>'UNAUTHORIZED']); exit;
@@ -69,3 +69,4 @@ $newId = (int)$ins->insert_id;
 $ins->close();
 
 echo json_encode(['ok'=>true,'thesis_id'=>$newId], JSON_UNESCAPED_UNICODE);
+

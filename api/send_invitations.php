@@ -1,7 +1,7 @@
 <?php
 
 header('Content-Type: application/json; charset=utf-8');
-require_once __DIR__ . '/../db_connect.php';
+require_once __DIR__ . '/../app/config/db_connect.php';
 
 if (($_COOKIE['role'] ?? '') !== 'Student' || empty($_COOKIE['userid'])) {
   http_response_code(401);
@@ -60,3 +60,4 @@ foreach ($profIds as $pid) {
 }
 
 echo json_encode(['ok'=>true,'created'=>$created,'skipped'=>$skipped]);
+

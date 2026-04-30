@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
-require_once __DIR__ . '/../db_connect.php'; 
+require_once __DIR__ . '/../app/config/db_connect.php'; 
 
 $email = trim($_POST['email'] ?? '');
 $pass  = trim($_POST['password'] ?? '');

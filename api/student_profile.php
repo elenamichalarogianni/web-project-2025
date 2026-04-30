@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
-require_once __DIR__ . '/../db_connect.php';
+require_once __DIR__ . '/../app/config/db_connect.php';
 
 if (($_COOKIE['role'] ?? '') !== 'Student') {
   http_response_code(401); echo json_encode(['ok'=>false,'error'=>'UNAUTHORIZED']); exit;
@@ -52,3 +52,4 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 
 http_response_code(405);
 echo json_encode(['ok'=>false,'error'=>'METHOD_NOT_ALLOWED']);
+

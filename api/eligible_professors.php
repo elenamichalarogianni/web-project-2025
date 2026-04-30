@@ -1,7 +1,7 @@
 <?php
 
 header('Content-Type: application/json; charset=utf-8');
-require_once __DIR__ . '/../db_connect.php';
+require_once __DIR__ . '/../app/config/db_connect.php';
 
 
 if (($_COOKIE['role'] ?? '') !== 'Student' || empty($_COOKIE['userid'])) {
@@ -62,3 +62,4 @@ while ($p = $res->fetch_assoc()) {
   }
 }
 echo json_encode(['ok'=>true,'items'=>$out]);
+
