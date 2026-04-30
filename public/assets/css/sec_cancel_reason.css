@@ -1,0 +1,125 @@
+
+:root{
+  --brand:#185A7B;
+  --brand-dark:#144059;
+  --top:#1f4d64;
+  --light:#d0e6ef;
+  --bg1:#ffffff;
+  --bg2:#f9fbfc;
+  --text:#0f1e26;
+}
+
+
+body{
+  margin:0;
+  padding-top:80px;      
+  padding-left:120px;    
+  font-family:Arial, sans-serif;
+  color:var(--text);
+  background:linear-gradient(180deg,var(--bg2),var(--bg1));
+}
+
+
+.form-card{
+  width:90%;
+  max-width:760px;
+  margin:40px auto;
+  padding:28px 26px;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--light));
+  border:1px solid var(--light);
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+  box-sizing:border-box;
+}
+
+
+.form-card h2{
+  margin:0 0 16px;
+  text-align:center;
+  font-size:26px;
+  font-weight:700;
+  color:var(--brand);
+  letter-spacing:.5px;
+  border-bottom:2px solid var(--light);
+  padding-bottom:10px;
+}
+
+
+.form-card p{
+  margin:10px 0 18px;
+  line-height:1.55;
+}
+.form-card p strong{ color:#1f4d64; }
+
+.form-row{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:14px;
+}
+.form-row label{
+  color:#1f4d64;
+  font-weight:600;
+}
+.form-row input[type="number"],
+.form-row input[type="text"]{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid var(--light);
+  border-radius:8px;
+  background:#fff;
+  color:var(--text);
+  box-sizing:border-box;
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+.form-row input[type="number"]:focus,
+.form-row input[type="text"]:focus{
+  outline:none;
+  border-color:var(--brand);
+  box-shadow:0 0 0 3px rgba(24,90,123,.15);
+}
+
+
+.actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:6px;
+}
+
+
+.btn{
+  -webkit-appearance:none; appearance:none;
+  display:inline-block;
+  border-radius:6px;
+  padding:10px 12px;
+  font-size:16px;
+  text-decoration:none;
+  cursor:pointer;
+  border:1px solid transparent;
+  transition:background .25s ease, transform .04s ease, border-color .25s ease;
+  box-shadow:0 2px 6px rgba(24,90,123,.18);
+}
+.btn:active{ transform:translateY(1px); }
+
+.btn-primary{
+  background:var(--brand);
+  border-color:var(--brand);
+  color:#fff;
+}
+.btn-primary:hover{ background:var(--brand-dark); }
+
+
+.btn-danger{
+  background:#9b2c2c; border-color:#9b2c2c; color:#fff;
+}
+.btn-danger:hover{ background:#7f2323; }
+
+
+@media (max-width:900px){
+  .form-card{ width:92%; padding:24px; }
+}
+@media (max-width:600px){
+  .actions{ flex-direction:column; }
+  .btn{ width:100%; text-align:center; }
+}

@@ -1,0 +1,200 @@
+
+:root{
+  --brand:#185A7B;
+  --brand-dark:#144059;
+  --top:#1f4d64;
+  --light:#d0e6ef;
+  --bg1:#ffffff;
+  --bg2:#f9fbfc;
+  --text:#0f1e26;
+}
+
+
+.thesis-details{
+  width:90%;
+  max-width:900px;
+  margin:40px auto;
+  padding:30px;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2),var(--light));
+  border:1px solid var(--light);
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+  box-sizing:border-box;
+  color:var(--text);
+}
+
+
+.thesis-details h2{
+  text-align:center;
+  font-family:Arial, sans-serif;
+  font-size:28px;
+  font-weight:bold;
+  color:var(--brand);
+  margin-top:0;
+  margin-bottom:25px;
+  letter-spacing:1px;
+  border-bottom:2px solid var(--light);
+  padding-bottom:10px;
+}
+
+
+.thesis-details h3{
+  color:var(--brand);
+  font-size:22px;
+  margin:24px 0 12px;
+  border-bottom:2px solid var(--light);
+  padding-bottom:6px;
+}
+
+
+.thesis-details p{
+  margin:8px 0;
+  line-height:1.55;
+}
+.thesis-details p strong{ color:#1f4d64; }
+
+
+.committee-section{
+  background:#fff;
+  border:1px solid var(--light);
+  border-radius:10px;
+  padding:16px;
+  box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+.committee-list{
+  list-style:none;
+  margin:8px 0 0;
+  padding:0;
+}
+.committee-list li{
+  padding:10px 12px;
+  border:1px solid var(--light);
+  border-radius:8px;
+  background:#fff;
+  margin-bottom:10px;
+}
+.committee-list li span{ color:#58798a; }
+
+
+.timeline{
+  list-style:none;
+  margin:10px 0 0;
+  padding-left:1px;
+  position:relative;
+}
+
+.timeline li{
+  position:relative;
+  background:#fff;
+  border:1px solid var(--light);
+  border-radius:8px;
+  padding:10px 12px;
+  margin:0 0 12px;
+  box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+
+.supervisor-btn,
+.submit-btn{
+  -webkit-appearance:none; appearance:none;
+  display:inline-block;
+  background:var(--brand);
+  color:#fff !important;
+  border:1px solid var(--brand);
+  border-radius:6px;
+  padding:10px 12px;
+  font-size:16px;
+  text-decoration:none;
+  cursor:pointer;
+  transition:background .25s ease, transform .04s ease;
+  box-shadow:0 2px 6px rgba(24,90,123,.18);
+  margin:6px 8px 6px 0;
+}
+.supervisor-btn:hover,
+.submit-btn:hover{ background:var(--brand-dark); }
+.supervisor-btn:active,
+.submit-btn:active{ transform:translateY(1px); }
+
+
+.thesis-details textarea,
+.thesis-details input[type="text"],
+.thesis-details input[type="number"],
+.thesis-details input[type="date"]{
+  width:100%;
+  padding:10px 12px;
+  margin-top:6px;
+  border:1px solid var(--light);
+  border-radius:8px;
+  background:#fff;
+  color:var(--text);
+  box-sizing:border-box;
+}
+.thesis-details textarea:focus,
+.thesis-details input[type="text"]:focus,
+.thesis-details input[type="number"]:focus,
+.thesis-details input[type="date"]:focus{
+  outline:none;
+  border-color:var(--brand);
+  box-shadow:0 0 0 3px rgba(24,90,123,.15);
+}
+
+
+.grade-card{
+  background:#fff;
+  border:1px solid var(--light);
+  border-left:4px solid var(--brand);
+  border-radius:10px;
+  padding:16px;
+  box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(220px,1fr));
+  gap:14px 18px;
+}
+.final-line{
+  display:flex; align-items:center; gap:10px;
+  margin:12px 0 8px;
+  padding:10px 12px;
+  background:#fbfdff;
+  border:1px dashed var(--light);
+  border-radius:8px;
+}
+.final-line output{ font-weight:700; color:#1f4d64; }
+
+.thesis-details table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+  border:1px solid var(--light);
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+.thesis-details th,
+.thesis-details td{
+  padding:10px 12px;
+  border-bottom:1px solid var(--light);
+  text-align:left;
+}
+.thesis-details th{
+  background:linear-gradient(180deg,#eef6fb,#e5f1f8);
+  color:#1f4d64;
+  font-weight:700;
+}
+
+
+.thesis-details .actions.full{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:18px;
+}
+
+@media (max-width:900px){
+  .thesis-details{ width:92%; padding:24px; }
+  .grid2{ grid-template-columns:1fr; }
+}
+@media (max-width:600px){
+  .supervisor-btn,.submit-btn{ width:100%; text-align:center; }
+}
